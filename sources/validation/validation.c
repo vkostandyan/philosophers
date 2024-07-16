@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 12:46:07 by vkostand          #+#    #+#             */
-/*   Updated: 2024/07/13 21:42:43 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:30:15 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,13 @@ int	all_numbers(int argc, char **argv)
 	return (1);
 }
 
-int	correct_input(int argc, char **argv, t_philo *philo)
+int	correct_input(int argc, char **argv, t_data *philo)
 {
 	if (!all_numbers(argc, argv))
+	{
+		printf("Incorrect input\n");
 		return (0);
+	}
 	philo->philo_nmb = ft_atos(argv[1]);
 	philo->die_time = ft_atos(argv[2]);
 	philo->eat_time = ft_atos(argv[3]);
@@ -65,18 +68,9 @@ int	correct_input(int argc, char **argv, t_philo *philo)
 		|| philo->die_time > INT_MAX || philo->eat_time < 60
 		|| philo->eat_time > INT_MAX || philo->sleep_time < 60
 		|| philo->sleep_time > INT_MAX || philo->must_eat > INT_MAX)
-		return (0);
+		{
+			printf("Incorrect input\n");
+			return (0);
+		}
 	return (1);
-}
-
-int	main(int argc, char **argv)
-{
-	t_philo	philo;
-
-	if (!correct_input(argc, argv, &philo))
-	{
-		printf("Not Correct_input\n");
-		return (1);
-	}
-	printf("Correct input\n");
 }

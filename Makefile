@@ -1,18 +1,26 @@
 NAME = philo
 CFLAGS = -Wall -Wextra -Werror 
 CC = cc #-fsanitize=address
-SRCS =	validation.c \
+SRCS =	main.c \
+		memory.c \
+		thread.c \
+		helpers.c \
+		monitoring.c \
+		initialization.c
 
 HEADER = 	philosophers.h \
-			helpers.c
 
-SRCS_DIR = ./sources/validation/
+VALIDATION = validation.c
+
+SRCS_DIR = ./sources/program/
 HEADER_DIR = ./headers/
+VALIDATION_DIR = ./sources/validation/
 
 SRCS := $(addprefix $(SRCS_DIR), $(SRCS))
 HEADER := $(addprefix $(HEADER_DIR), $(HEADER)) 
+VALIDATION := $(addprefix $(VALIDATION_DIR), $(VALIDATION)) 
 
-SRCS += $(LIBFT)
+SRCS += $(VALIDATION)
 
 OBJS = ${SRCS:.c=.o}
 
