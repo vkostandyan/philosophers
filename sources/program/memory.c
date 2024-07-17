@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:09:08 by vkostand          #+#    #+#             */
-/*   Updated: 2024/07/16 21:20:52 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:58:43 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void clean_data(t_data *data)
     while (i < data->philo_nmb)
     {
         pthread_mutex_destroy(&data->forks[i]);
+        pthread_mutex_destroy(&data->philo->write_lock);
+        pthread_mutex_destroy(&data->philo->num_eaten_lock);
+        pthread_mutex_destroy(&data->philo->die_lock);
         // pthread_join(data->philo[i].thread, NULL); // texapoxeci threadi mej
         i++;
     }

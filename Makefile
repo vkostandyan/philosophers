@@ -1,11 +1,12 @@
 NAME = philo
-CFLAGS = -Wall -Wextra -Werror 
-CC = cc #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread
+CC = cc #-fsanitize=thread
 SRCS =	main.c \
 		memory.c \
 		thread.c \
 		helpers.c \
 		monitoring.c \
+		philo_actions.c \
 		initialization.c
 
 HEADER = 	philosophers.h \
