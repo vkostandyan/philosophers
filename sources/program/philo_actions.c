@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 16:20:46 by vkostand          #+#    #+#             */
-/*   Updated: 2024/07/17 19:31:45 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/08/06 21:14:15 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void eat(t_philo *philo)
     philo->num_eaten++;
     pthread_mutex_unlock(&philo->num_eaten_lock);
     ft_usleep(philo->eat_time);
+    pthread_mutex_lock(&philo->time_lock);
     philo->last_eat_time = get_current_time();
+    pthread_mutex_unlock(&philo->time_lock);
     pthread_mutex_unlock(philo->l_fork);
     pthread_mutex_unlock(philo->r_fork);
 }

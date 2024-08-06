@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:14:33 by vkostand          #+#    #+#             */
-/*   Updated: 2024/07/17 17:59:51 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:06:17 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_philo
     pthread_mutex_t write_lock;
     pthread_mutex_t num_eaten_lock;
     pthread_mutex_t die_lock;
+    pthread_mutex_t time_lock;
 }               t_philo;
 
 typedef struct s_data
@@ -73,6 +74,8 @@ void think(t_philo *philo);
 void eat(t_philo *philo);
 int is_dead(t_philo *philo);
 
+//---- Monitoring ----
+int monitoring(t_data *data);
 
 //---- Helpers ----
 size_t get_current_time();

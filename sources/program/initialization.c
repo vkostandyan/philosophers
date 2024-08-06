@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:18:58 by vkostand          #+#    #+#             */
-/*   Updated: 2024/07/17 17:48:18 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:06:29 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void init_data(t_data *data)
         pthread_mutex_init(&data->philo->write_lock, NULL);
         pthread_mutex_init(&data->philo->num_eaten_lock, NULL);
         pthread_mutex_init(&data->philo->die_lock, NULL);
+        pthread_mutex_init(&data->philo->time_lock, NULL);
         i++;
     }
 }

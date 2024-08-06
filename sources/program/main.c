@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:54:28 by vkostand          #+#    #+#             */
-/*   Updated: 2024/07/17 21:57:27 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:01:09 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ int main(int argc, char **argv)
     init_data(&data);
     if(!create_thread(&data))
     {
-        printf("Chem kracal \n");
+        printf("Create thread error\n");
+        return (1);
     }
+    printf("eku main\n");
     // ft_usleep(10000, &data);
     clean_data(&data); 
     system("leaks philo");

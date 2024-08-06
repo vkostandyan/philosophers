@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 21:05:38 by vkostand          #+#    #+#             */
-/*   Updated: 2024/07/17 21:00:06 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:25:07 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void *philo_routine(void *pointer)
     while(!is_dead(philo))
     {
         eat(philo);
+        // if(is_dead(philo))
+        //     break;
         _sleep(philo);
+        // if(is_dead(philo))
+        //     break;
         think(philo);
     }
     return (NULL);
@@ -39,6 +43,8 @@ int create_thread(t_data *data)
             return (0);
         i++;
     }
+    while(monitoring(data))
+        ;
     i = 0;
     while (i < data->philo_nmb)
     {
