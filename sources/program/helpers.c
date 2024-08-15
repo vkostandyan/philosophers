@@ -6,19 +6,22 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:42:34 by vkostand          #+#    #+#             */
-/*   Updated: 2024/07/19 19:02:10 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/08/15 19:46:24 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void print_message(t_philo *philo, char *str)
+void	print_message(t_philo *philo, char *str, int end)
 {
-	size_t time;
+	size_t	time;
 
 	pthread_mutex_lock(&philo->write_lock);
-	time = get_current_time() - philo->start_time;
-	printf("%zu %d %s\n", time, philo->id, str);
+	if (!is_dead(philo) || end == 1)
+	{
+		time = get_current_time() - philo->start_time;
+		printf("%zu %d %s\n", time, philo->id, str);
+	}
 	pthread_mutex_unlock(&philo->write_lock);
 }
 
@@ -39,10 +42,9 @@ void	ft_usleep(size_t miliseconds)
 	size_t	start;
 
 	start = get_current_time();
-	while (miliseconds > get_current_time() - start) // && !data->is_dead hanecinq vor data chstana
+	while (miliseconds > get_current_time() - start)
 		;
 }
-
 
 // void	ft_usleep(size_t miliseconds, t_data *data)
 // {
