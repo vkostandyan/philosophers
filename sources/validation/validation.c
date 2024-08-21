@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 12:46:07 by vkostand          #+#    #+#             */
-/*   Updated: 2024/08/09 19:00:25 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:32:02 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,11 @@ int	correct_input(int argc, char **argv, t_data *philo)
 		philo->must_eat = ft_atos(argv[5]);
 	else
 		philo->must_eat = -1;
-	if (philo->philo_nmb < 1 || philo->philo_nmb > 200 || philo->die_time < 60
+	if (philo->philo_nmb < 1 || philo->die_time < 60
 		|| philo->die_time > INT_MAX || philo->eat_time < 60
 		|| philo->eat_time > INT_MAX || philo->sleep_time < 60
-		|| philo->sleep_time > INT_MAX || philo->must_eat > INT_MAX)
+		|| philo->sleep_time > INT_MAX || philo->must_eat > INT_MAX
+		|| (philo->must_eat < 1 && philo->must_eat != -1))
 	{
 		printf("Incorrect input\n");
 		return (0);

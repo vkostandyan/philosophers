@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:58:29 by vkostand          #+#    #+#             */
-/*   Updated: 2024/08/21 15:37:12 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/08/21 16:00:04 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	philos_are_full(t_data *data)
 	return (1);
 }
 
-void change_philos_state(t_data *data)
+void	change_philos_state(t_data *data)
 {
-    pthread_mutex_lock(&data->die_lock);
-    data->dead_flag = 1;
-    pthread_mutex_unlock(&data->die_lock);
+	pthread_mutex_lock(&data->die_lock);
+	data->dead_flag = 1;
+	pthread_mutex_unlock(&data->die_lock);
 }
 
 int	monitoring(t_data *data)
@@ -54,8 +54,9 @@ int	monitoring(t_data *data)
 			return (0);
 		}
 		pthread_mutex_lock(&data->time_lock);
-		// get_value(&(data->philo[i].last_meal_lock), &(data->philo[i].last_meal))
-		if (get_current_time() - get_value(&(data->philo[i].last_meal_lock), &(data->philo[i].last_meal)) >= get_value(&(data->get_lock), &(data->die_time)))
+		if (get_current_time() - get_value(&(data->philo[i].last_meal_lock),
+				&(data->philo[i].last_meal)) >= get_value(&(data->get_lock),
+				&(data->die_time)))
 		{
 			change_philos_state(data);
 			print_message(&data->philo[i], "died", 1);
