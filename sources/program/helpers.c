@@ -5,25 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 13:42:34 by vkostand          #+#    #+#             */
-/*   Updated: 2024/08/15 19:46:24 by vkostand         ###   ########.fr       */
+/*   Created: 2024/08/17 19:27:45 by vkostand          #+#    #+#             */
+/*   Updated: 2024/08/21 15:41:57 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	print_message(t_philo *philo, char *str, int end)
-{
-	size_t	time;
-
-	pthread_mutex_lock(&philo->write_lock);
-	if (!is_dead(philo) || end == 1)
-	{
-		time = get_current_time() - philo->start_time;
-		printf("%zu %d %s\n", time, philo->id, str);
-	}
-	pthread_mutex_unlock(&philo->write_lock);
-}
 
 size_t	get_current_time(void)
 {
@@ -37,20 +24,33 @@ size_t	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	ft_usleep(size_t miliseconds)
+void	ft_usleep(size_t sleep_time, t_philo *philo)
 {
-	size_t	start;
+	u_int64_t	start;
 
 	start = get_current_time();
-	while (miliseconds > get_current_time() - start)
-		;
+	while ((get_current_time() - start) < sleep_time && !get_value(&(philo->data->die_lock), &(philo->data->dead_flag)))
+		usleep(500);
 }
 
-// void	ft_usleep(size_t miliseconds, t_data *data)
-// {
-// 	size_t	start;
+void	print_message(t_philo *philo, char *str, int end)
+{
+	pthread_mutex_lock(&philo->write_lock);
+	if (!get_value(&(philo->data->die_lock), &(philo->data->dead_flag))
+		|| end == 1)
+	{
+		printf("%zu %d %s\n", get_current_time() - philo->data->start_time,
+			philo->id, str);
+	}
+	pthread_mutex_unlock(&philo->write_lock);
+}
 
-// 	start = get_current_time();
-// 	while (miliseconds > get_current_time() - start && !data->is_dead)
-// 		;
-// }
+size_t	get_value(pthread_mutex_t *mutex, size_t *value)
+{
+	size_t	temp;
+
+	pthread_mutex_lock(mutex);
+	temp = *value;
+	pthread_mutex_unlock(mutex);
+	return (temp);
+}

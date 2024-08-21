@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 14:54:28 by vkostand          #+#    #+#             */
-/*   Updated: 2024/08/15 19:54:56 by vkostand         ###   ########.fr       */
+/*   Created: 2024/08/17 18:33:28 by vkostand          #+#    #+#             */
+/*   Updated: 2024/08/21 14:59:09 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,36 +21,32 @@ int	main(int argc, char **argv)
 		// system("leaks philo");
 		return (1);
 	}
-	if (!memory_allocation(&data))
+	if (!allocate_memory(&data))
 	{
 		// system("leaks philo");
-		return (1);
+		return (2);
 	}
 	if (!init_data(&data))
 	{
-		printf("Init_data error\n");
 		// system("leaks philo");
-		return (1);
+		return (3);
 	}
 	if (!create_threads(&data))
 	{
-		printf("create_threads Error\n");
 		// system("leaks philo");
-		return (1);
+		return (4);
 	}
 	while (monitoring(&data))
 		;
 	if (!join_threads(&data))
 	{
-		printf("join_threads Error \n");
 		// system("leaks philo");
-		return (1);
+		return (5);
 	}
-	if (!clean_data(&data))
+	if (!clean_memory(&data))
 	{
-		printf("Clean data Error\n");
 		// system("leaks philo");
-		return (1);
+		return (6);
 	}
 	// system("leaks philo");
 	return (0);

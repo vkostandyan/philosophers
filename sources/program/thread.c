@@ -5,27 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 21:05:38 by vkostand          #+#    #+#             */
-/*   Updated: 2024/08/15 19:41:36 by vkostand         ###   ########.fr       */
+/*   Created: 2024/08/18 16:43:11 by vkostand          #+#    #+#             */
+/*   Updated: 2024/08/21 15:35:02 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	wait_for_all_philos(t_philo *philo)
+{
+	while (!get_value(&(philo->data->ready_lock), &philo->data->all_ready))
+		;
+}
+
+// void	*a(void *pointer)
+// {
+// 		t_philo	*philo;
+
+// 	philo = (t_philo *)pointer;
+// 	wait_for_all_philos(philo);
+// 	printf("%zu\n", philo->data->all_ready);
+// 	write(1, "Y\n", 2);
+// 	if (philo->id % 2 == 0)
+// 		ft_usleep(get_time(philo->data, EAT));
+// 	while (!get_value(&(philo->data->die_lock), &(philo->data->dead_flag)))
+// 	{
+// 		eat(philo);
+// 		_sleep(philo);
+// 		think(philo);
+// 	}
+// 	return (pointer);
+// }
 
 void	*philo_routine(void *pointer)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)pointer;
+	wait_for_all_philos(philo);
 	if (philo->id % 2 == 0)
-		ft_usleep(philo->eat_time);
-	while (!is_dead(philo))
+		ft_usleep(get_value(&(philo->data->get_lock),
+				&(philo->data->eat_time)), philo);
+	while (!get_value(&(philo->data->die_lock), &(philo->data->dead_flag)))
 	{
 		eat(philo);
 		_sleep(philo);
 		think(philo);
 	}
-	return (NULL);
+	return (pointer);
 }
 
 int	create_threads(t_data *data)
@@ -40,6 +67,10 @@ int	create_threads(t_data *data)
 			return (0);
 		i++;
 	}
+	pthread_mutex_lock(&data->ready_lock);
+	data->all_ready = 1;
+	data->start_time = get_current_time();
+	pthread_mutex_unlock(&data->ready_lock);
 	return (1);
 }
 

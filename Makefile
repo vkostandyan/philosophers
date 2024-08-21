@@ -3,11 +3,11 @@ CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread
 CC = cc
 SRCS =	main.c \
 		memory.c \
-		thread.c \
+		initialization.c \
 		helpers.c \
-		monitoring.c \
+		thread.c \
 		philo_actions.c \
-		initialization.c
+		monitoring.c 
 
 HEADER = 	philosophers.h \
 
@@ -28,7 +28,7 @@ OBJS = ${SRCS:.c=.o}
 all: ${NAME}
 
 ${NAME}: ${OBJS} Makefile 
-	@${CC} ${CFLAGS} -I$(HEADER_DIR) ${OBJS} -o ${NAME}
+	${CC} ${CFLAGS} -I$(HEADER_DIR) ${OBJS} -o ${NAME}
 
 .c.o:
 	$(CC) $(CFLAGS) -I$(HEADER_DIR) -c $< -o $(<:.c=.o)
