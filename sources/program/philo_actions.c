@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 17:52:08 by vkostand          #+#    #+#             */
-/*   Updated: 2024/08/21 15:34:50 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:27:19 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	eat(t_philo *philo)
 	print_message(philo, "has taken a fork", 0);
 	if (philo->data->philo_nmb == 1)
 	{
-		ft_usleep(philo->data->die_time, philo);
+		ft_usleep(get_value(&(philo->data->get_lock), &(philo->data->die_time)),
+			philo);
 		pthread_mutex_lock(&philo->data->die_lock);
 		philo->data->dead_flag = 1;
 		pthread_mutex_unlock(&philo->data->die_lock);

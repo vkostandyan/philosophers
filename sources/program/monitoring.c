@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:58:29 by vkostand          #+#    #+#             */
-/*   Updated: 2024/08/21 16:00:04 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:23:17 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	monitoring(t_data *data)
 		if (philos_are_full(data))
 		{
 			change_philos_state(data);
-			printf("Everyone is full\n");
 			return (0);
 		}
 		pthread_mutex_lock(&data->time_lock);

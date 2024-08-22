@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:14:33 by vkostand          #+#    #+#             */
-/*   Updated: 2024/08/21 15:30:33 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/08/21 18:31:44 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ struct					s_data
 	size_t				die_time;
 	size_t				eat_time;
 	size_t				sleep_time;
+	size_t				all_ready;
+	size_t				start_time;
 	ssize_t				must_eat;
 	pthread_mutex_t		write_lock;
 	pthread_mutex_t		time_lock;
 	pthread_mutex_t		die_lock;
 	pthread_mutex_t		get_lock;
-	size_t				all_ready;
 	pthread_mutex_t		ready_lock;
-	size_t				start_time;
 	t_philo				*philo;
 	pthread_mutex_t		*forks;
 };
@@ -68,22 +68,27 @@ int						all_numbers(int argc, char **argv);
 size_t					ft_atos(const char *str);
 
 //---- Helpers ----
-size_t					get_current_time(void);
-void					ft_usleep(size_t sleep_time, t_philo *philo);
 void					print_message(t_philo *philo, char *str, int end);
+size_t					get_value(pthread_mutex_t *mutex, size_t *value);
+void					ft_usleep(size_t sleep_time, t_philo *philo);
+void					wait_for_all_philos(t_philo *philo);
+size_t					get_current_time(void);
 
 //---- Initialization ----
+int						init_philos(t_data *data);
+int						init_forks(t_data *data);
 int						init_data(t_data *data);
-int						mutex_init(t_data *data, size_t i);
 
 //---- Memory ----
 int						allocate_memory(t_data *data);
+int						destroy_philos(t_data *data);
+int						destroy_forks(t_data *data);
 int						clean_memory(t_data *data);
 
 //---- Monitoring
-int						monitoring(t_data *data);
 void					change_philo_state(t_data *data);
 int						philos_are_full(t_data *data);
+int						monitoring(t_data *data);
 
 //---- Actions ----
 void					_sleep(t_philo *philo);
@@ -91,12 +96,8 @@ void					think(t_philo *philo);
 void					eat(t_philo *philo);
 
 //---- Thread ----
+void					*philo_routine(void *pointer);
 int						create_threads(t_data *data);
 int						join_threads(t_data *data);
-void					*philo_routine(void *pointer);
-
-//---- Getters ----
-size_t					get_time(t_data *data, int i);
-size_t					get_value(pthread_mutex_t *mutex, size_t *value);
 
 #endif
